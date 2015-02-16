@@ -4,9 +4,6 @@ customizations.
 
 Requires latest irssi (0.8.17).
 
-When started you must /reload. This is necessary each time you restart irssi to
-have alligned nicknames. No idea why..
-
 Instructions:
 
 0. Back up your shit.
@@ -20,4 +17,3 @@ Instructions:
    file, there should be some intructions in them.
 6. '/save' & '/layout save', the latter so irssi remembers the position of the
    channel order.
-7. That's it. Just don't forget to /reload when you restart irssi.

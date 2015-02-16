@@ -1,6 +1,7 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=~
 # Minimalist dark theme by f3bruary
 # Inspired by Weed theme for irssi.
+# https://github.com/ronilaukkarinen/weed
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=~
 
 default_color = "-1";
@@ -47,6 +48,10 @@ abstracts = {
   msgnick = "$0$1- %|";
   ownmsgnick = "{msgnick %N$1%K%_|}%N";
   ownnick = "$*";
+  # v3.05-hilight is now on red background and white text
+  # Can be seen better in communicator phone.
+  # (if you liked the old fashioned hilight, comment out next lines below and enable the noted ones)
+  #
 
   pubmsgnick = "{msgnick %r$1%K%_|}%w";
   pubnick = "$*";
@@ -54,6 +59,14 @@ abstracts = {
   menick = "$*%n";
   # $0 = hilight color, $1 = mode, $2 = nick
   pubmsghinick = "%z2E2E2E%G{msgnick $2-|}";
+
+  # Got rid of on version 3.05:
+  #
+  #pubmsgnick = "{msgnick %r$1%K%_|}%w";
+  #pubnick = "$*";
+  #pubmsgmenick = "%G%K{msgnick $1-%R|}%0%W";
+  #menick = "$*%n";
+  #pubmsghinick = "%G%K{msgnick $2-%R|}%0%W";
 
   msgchannel = ":$*";
   # $0 = nick, $1 = host
@@ -157,15 +170,15 @@ formats = {
     quit_once = "        %r*%K | %K{channick $0} [{chanhost $1}] %rquit%K %w(%KReason: \012{reason $2}%w)";
     nick_changed = "        %b*%K | %b{channick_hilight $0} %Kis now known as%b {channick_hilight $1}";
 
-    own_msg = "{ownmsgnick $nickalign$2 {ownnick $nickcolor$[-10]0$nicktrunc}}$1";
-    own_msg_channel = "{ownmsgnick $nickalign$3 {ownnick $nickcolor$[-10]0$nicktrunc}{msgchannel $1}}$2";
+    own_msg = "{ownmsgnick $2 {ownnick $nickcolor$[-10]0}}$1";
+    own_msg_channel = "{ownmsgnick $3 {ownnick $nickcolor$[-10]0}{msgchannel $1}}$2";
 
-    pubmsg_me = "{pubmsgmenick $nickalign$2 {menick $[-10]0$nicktrunc}}$1";
-    pubmsg_me_channel = "{pubmsgmenick $nickalign$3 {menick $[-10]0$nicktrunc}{msgchannel $1}}$2";
-    pubmsg_hilight = "{pubmsghinick $0 $nickalign$3 $[-10]1$nicktrunc}$2";
-    pubmsg_hilight_channel = "{pubmsghinick $0 $nickalign$4 $[-10]1$nicktrunc{msgchannel $2}}$3";
-    pubmsg = "{pubmsgnick $nickalign$2 {pubnick $nickcolor$[-10]0$nicktrunc}}$1";
-    pubmsg_channel = "{pubmsgnick $nickalign$3 {pubnick $nickcolor$[-10]0$nicktrunc}{msgchannel $1}}$2";
+    pubmsg_me = "{pubmsgmenick $2 {menick $[-10]0}}$1";
+    pubmsg_me_channel = "{pubmsgmenick $3 {menick $[-10]0}{msgchannel $1}}$2";
+    pubmsg_hilight = "{pubmsghinick $0 $3 $[-10]1}$2";
+    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $[-10]1{msgchannel $2}}$3";
+    pubmsg = "{pubmsgnick $2 {pubnick $nickcolor$[-10]0}}$1";
+    pubmsg_channel = "{pubmsgnick $3 {pubnick $nickcolor$[-10]0}{msgchannel $1}}$2";
 
     #   own_msg = "{ownmsgnick $2 {ownnick $[-10]0}}$1";
     #   own_msg_channel = "{ownmsgnick $3 {ownnick $[-10]0}{msgchannel $1}}$2";
@@ -253,7 +266,7 @@ formats = {
     chansetup_added = "Channel {channel $0} saved";
     chansetup_removed = "Channel {channel $0} removed";
     chansetup_header = "Channel         Network    Password   Settings";
-    chansetup_line = "{channel $[15]0} %|$[10]1 $[10]2 $3";
+    chansetup_line = "{channel $[15]0} %|$-10]1 $-10]2 $3";
     chansetup_footer = "";
     channel_move_notify = "{channel $0} is already joined in window $1, use \"/WINDOW ITEM MOVE $0\" to move it to this window";
 
@@ -277,7 +290,7 @@ formats = {
     alias_removed = "        %g*%K | Alias $0 %gremoved%K";
     alias_not_found = "        %r*%K | %rNo such%K alias: $0";
     aliaslist_header = "        %p*%K | %W%KAliases:";
-    aliaslist_line = "$[10]0 $1";
+    aliaslist_line = "$-10]0 $1";
     aliaslist_footer = "";
     log_opened = "        %g*%K | Log file {hilight $0} %gopened%K";
     log_closed = "        %g*%K | Log file {hilight $0} %gclosed%K";
@@ -354,9 +367,9 @@ formats = {
 
     #privat:
 
-    own_msg_private_query = "{ownprivmsgnick $nickalign{ownprivnick $nickcolor$[-10]2$nicktrunc}}$1";
+    own_msg_private_query = "{ownprivmsgnick {ownprivnick $nickcolor$[-10]2}}$1";
     own_msg_private = "{ownprivmsg msg $0}%w$1";
-    msg_private_query = "{privmsgnick $nickalign$nickcolor$[-10]0$nicktrunc}$2";
+    msg_private_query = "{privmsgnick $nickcolor$[-10]0}$2";
     msg_private = "{privmsg $0 $1}%w$2";
 
     # msn-styled:
@@ -432,7 +445,7 @@ formats = {
     netsplit_join_more = "        %g*%K | %g{netjoin netsplit}%K - %|over, %gjoins:%K $0 (+$1 more)";
     no_netsplits = "        %p*%K | %W%KThere are no netsplits";
     netsplits_header = "Nick      Channel    Server               Splitted server";
-    netsplits_line = "$[9]0 $[10]1 $[20]2 $3";
+    netsplits_line = "$[9]0 $-10]1 $[20]2 $3";
     netsplits_footer = "";
     ircnet_added = "        %g*%K | Ircnet $0 %gsaved%K";
     ircnet_removed = "        %g*%K | Ircnet $0 %gremoved%K";
@@ -441,7 +454,7 @@ formats = {
     ircnet_line = "$0: $1";
     ircnet_footer = "";
     setupserver_header = "Server               Port  Network    Settings";
-    setupserver_line = "%|$[!20]0 $[5]1 $[10]2 $3";
+    setupserver_line = "%|$[!20]0 $[5]1 $-10]2 $3";
     setupserver_footer = "";
     joinerror_toomany = "        %r*%K | Join %rfails%K: {channel $0} (You have joined to too many channels)";
     joinerror_full = "        %r*%K | Join %rfails%K: {channel $0} (Channel is full)";
@@ -532,10 +545,11 @@ formats = {
     unsilenced = "        %g*%K | %gUnsilenced%K {nick $0}";
     silence_line = "{nick $0}: silence {ban $1}";
     ask_oper_pass = "        %p*%K | %W%KOperator password:";
-    own_action = "$nickalign{ownaction $[.8]0$nicktrunc}$1";
-    action_private = "$nickalign{pvtaction $[-10]0$nicktrunc}$2";
-    action_private_query = "$nickalign{pvtaction_query $[-8]0$nicktrunc}$2";
-    action_public = "$nickalign{pubaction $[.8]0$nicktrunc}$1";
+
+    own_action = "{ownaction $[.8]0}$1";
+    action_private = "{pvtaction $[.8]0}$2";
+    action_private_query = "{pvtaction_query $[.8]0}$2";
+    action_public = "{pubaction $[.8]0}$1";
   };
   "fe-common/perl" = {
     script_not_found = "        %r*%K | Script {hilight $0} %rnot found%K";
@@ -576,10 +590,5 @@ formats = {
     # Window without focus
     awl_display_nokey = "%z1C1C1C%W$H $Q $N$C $S";
     awl_display_key = "%z1C1C1C%W$H $Q $C $S";
-  };
-  "Irssi::Script::nm2" = {
-    neat_style = " , , p , , c , t , , , ";
-    neat_pad_char = "";
-    neat_truncate_char = "";
   };
 };

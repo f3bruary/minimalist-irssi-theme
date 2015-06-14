@@ -1,4 +1,4 @@
-# minimalist-irssi-theme
+# Minimal Irssi Theme
 A theme for irssi, based on 'weed' by ronilaukkarinen with some personal
 customizations.
 

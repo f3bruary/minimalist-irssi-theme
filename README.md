@@ -1,6 +1,5 @@
 # minimalist-irssi-theme
-A minimalistic theme for irssi, based on 'weed' by ronilaukkarinen with some personal.
-customizations.
+A simple, minimal clean looking theme for irssi, based on 'weed' by ronilaukkarinen with some personal customizations.
 
 Requires latest irssi (0.8.17).
 
